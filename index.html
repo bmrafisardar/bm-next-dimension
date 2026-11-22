@@ -1,311 +1,89 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BM Rafi Sardar — The Next Dimension</title>
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-obsidian: #050507;
-            --gold-primary: #D4AF37;
-            --gold-bright: #F7E199;
-            --gold-dark: #997A15;
-            --silver-primary: #C8CDD5;
-            --silver-muted: #8A93A2;
-            --glass-border: rgba(212, 175, 55, 0.32);
-            --glass-highlight: rgba(255, 255, 255, 0.16);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            background-color: #050507;
-            color: #F8FAFC;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        a { color: inherit; text-decoration: none; }
-        button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-
-        /* 1. DESKTOP SITE REQUIRED GATE */
-        #desktopGate {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: radial-gradient(circle at top, #1A1508 0%, #050507 80%);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            text-align: center;
-        }
-
-        .gate-card {
-            max-width: 440px;
-            width: 100%;
-            border-radius: 28px;
-            padding: 38px 26px;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.95);
-        }
-
-        .gate-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            border: 1px solid var(--gold-primary);
-            background: rgba(212, 175, 55, 0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            color: var(--gold-bright);
-        }
-
-        .gate-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: var(--gold-bright);
-            margin-bottom: 12px;
-        }
-
-        .gate-desc {
-            font-size: 14px;
-            color: var(--silver-primary);
-            margin-bottom: 22px;
-        }
-
-        .gate-steps {
-            text-align: left;
-            background: rgba(0, 0, 0, 0.55);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 18px;
-            padding: 16px 18px;
-            font-size: 13px;
-            color: #E2E8F0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .gate-steps span { color: var(--gold-bright); font-weight: 700; }
-
-        /* 2. LIQUID DROP POINTER & TOUCH FOLLOWER */
-        #liquidDrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.6);
-            transition: opacity 0.25s ease, transform 0.18s ease-out;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5), rgba(212, 175, 55, 0.25) 55%, rgba(200, 205, 213, 0.1) 100%);
-            backdrop-filter: blur(6px) brightness(1.3);
-            -webkit-backdrop-filter: blur(6px) brightness(1.3);
-            border: 1px solid rgba(247, 225, 153, 0.7);
-            box-shadow: 0 8px 26px rgba(212, 175, 55, 0.4), inset 0 2px 8px rgba(255, 255, 255, 0.6);
-            animation: liquidMorph 4s ease-in-out infinite;
-        }
-
-        #liquidDrop.active {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        @keyframes liquidMorph {
-            0%, 100% { border-radius: 52% 48% 54% 46% / 48% 52% 48% 52%; }
-            33% { border-radius: 44% 56% 48% 52% / 55% 45% 55% 45%; }
-            66% { border-radius: 56% 44% 52% 48% / 46% 54% 46% 54%; }
-        }
-
-        /* Ambient Orbs */
-        .ambient-orb-gold {
-            position: fixed;
-            top: -80px;
-            left: -80px;
-            width: 480px;
-            height: 480px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(5, 5, 7, 0) 70%);
-            filter: blur(55px);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .ambient-orb-silver {
-            position: fixed;
-            bottom: -80px;
-            right: -80px;
-            width: 440px;
-            height: 440px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(200, 205, 213, 0.18) 0%, rgba(5, 5, 7, 0) 70%);
-            filter: blur(55px);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Liquid Glass Panel */
-        .liquid-glass {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 28px 56px -12px rgba(0, 0, 0, 0.9), inset 0 1px 1px var(--glass-highlight);
-        }
-
-        /* Navigation */
-        .navbar-wrapper {
-            position: fixed;
-            top: 22px;
-            left: 0;
-            right: 0;
-            z-index: 50;
-            padding: 0 24px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .navbar {
-            width: 100%;
-            max-width: 1140px;
-            border-radius: 999px;
-            padding: 16px 34px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand-logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 19px;
-            letter-spacing: 0.16em;
-            color: var(--gold-bright);
-        }
-
-        .brand-logo span {
-            color: var(--silver-muted);
-            font-weight: 400;
-            font-size: 12px;
-            letter-spacing: 0.22em;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            font-size: 14px;
-            color: var(--silver-primary);
-        }
-
-        .nav-links a:hover { color: var(--gold-bright); }
-
-        .nav-cta {
-            padding: 9px 22px;
-            border-radius: 999px;
-            border: 1px solid rgba(212, 175, 55, 0.6);
-            background: rgba(212, 175, 55, 0.14);
-            color: var(--gold-bright) !important;
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        /* Main Container */
-        .container {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 1140px;
-            margin: 0 auto;
-            padding: 130px 24px 130px;
-            display: flex;
-            flex-direction: column;
-            gap: 64px;
-        }
-
-        /* Hero Section */
-        .hero-card {
-            border-radius: 34px;
-            padding: 68px 48px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .badge-pill {
-            display: inline-block;
-            padding: 7px 20px;
-            border-radius: 999px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.26em;
-            text-transform: uppercase;
-            color: var(--silver-primary);
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(200, 205, 213, 0.25);
-            margin-bottom: 28px;
-        }
-
-        .avatar-ring {
-            width: 136px;
-            height: 136px;
-            margin: 0 auto 28px;
-            border-radius: 50%;
-            padding: 3.5px;
-            background: linear-gradient(135deg, var(--gold-bright), var(--silver-primary), var(--gold-dark));
-            box-shadow: 0 0 45px rgba(212, 175, 55, 0.38);
-        }
-
-        .avatar-inner {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: #0A0A0E;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .avatar-initials {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 42px;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            background: linear-gradient(180deg, #FFFFFF 0%, var(--gold-primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 62px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            line-height: 1.12;
-            color: var(--gold-bright);
-            background: linear-gradient(90deg, #FFFFFF 0%, var(--gold-bright) 50%, var(--silver-primary) 100%);
-            -webkit-background-clip: text;
-        
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BM Rafi Sardar — The Next Dimension</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:#050507;color:#F8FAFC;font-family:system-ui,-apple-system,sans-serif;min-height:100vh;overflow-x:hidden;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+#desktopGate{position:fixed;inset:0;z-index:99999;background:radial-gradient(circle at top,#1A1508,#050507 80%);display:none;align-items:center;justify-content:center;padding:24px;text-align:center}
+.gate-card{max-width:420px;width:100%;border-radius:26px;padding:34px 24px;background:rgba(255,255,255,.06);backdrop-filter:blur(20px);border:1px solid rgba(212,175,55,.5);box-shadow:0 25px 50px #000}
+.gate-title{font-size:21px;font-weight:700;letter-spacing:.08em;color:#F7E199;margin:14px 0 10px}
+.gate-steps{text-align:left;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:14px;font-size:13px;color:#E2E8F0;margin-top:16px}
+.gate-steps b{color:#F7E199}
+#liquidDrop{position:fixed;top:0;left:0;width:62px;height:62px;border-radius:50%;pointer-events:none;z-index:9999;opacity:0;transform:translate(-50%,-50%) scale(.6);transition:opacity .2s,transform .15s;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.55),rgba(212,175,55,.28) 55%,rgba(200,205,213,.1));backdrop-filter:blur(5px) brightness(1.3);border:1px solid rgba(247,225,153,.75);box-shadow:0 8px 24px rgba(212,175,55,.45)}
+#liquidDrop.active{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.orb1,.orb2{position:fixed;width:420px;height:420px;border-radius:50%;filter:blur(60px);z-index:0;pointer-events:none}
+.orb1{top:-80px;left:-80px;background:radial-gradient(circle,rgba(212,175,55,.25),transparent 70%)}
+.orb2{bottom:-80px;right:-80px;background:radial-gradient(circle,rgba(200,205,213,.18),transparent 70%)}
+.glass{background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.02));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(212,175,55,.32);box-shadow:0 24px 48px rgba(0,0,0,.85)}
+.nav-wrap{position:fixed;top:20px;left:0;right:0;z-index:50;padding:0 24px;display:flex;justify-content:center}
+.nav{width:100%;max-width:1100px;border-radius:999px;padding:14px 30px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:700;font-size:18px;letter-spacing:.15em;color:#F7E199}
+.logo span{color:#8A93A2;font-weight:400;font-size:12px}
+.links{display:flex;align-items:center;gap:24px;font-size:14px;color:#C8CDD5}
+.cta{padding:8px 20px;border-radius:999px;border:1px solid rgba(212,175,55,.6);background:rgba(212,175,55,.15);color:#F7E199;font-weight:600}
+.wrap{position:relative;z-index:10;width:100%;max-width:1100px;margin:0 auto;padding:125px 24px 120px;display:flex;flex-direction:column;gap:56px}
+.hero{border-radius:32px;padding:64px 40px;text-align:center}
+.pill{display:inline-block;padding:6px 18px;border-radius:999px;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:#C8CDD5;background:rgba(255,255,255,.06);border:1px solid rgba(200,205,213,.25);margin-bottom:24px}
+.ring{width:130px;height:130px;margin:0 auto 24px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#F7E199,#C8CDD5,#997A15);box-shadow:0 0 40px rgba(212,175,55,.35)}
+.ring-in{width:100%;height:100%;border-radius:50%;background:#0A0A0E;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:700;color:#F7E199}
+h1{font-size:56px;font-weight:700;letter-spacing:.04em;color:#F7E199;margin-bottom:14px}
+.sub{font-size:16px;letter-spacing:.18em;text-transform:uppercase;color:#C8CDD5;margin-bottom:34px}
+.btns{display:flex;justify-content:center;gap:16px}
+.btn-g{padding:15px 32px;border-radius:999px;background:linear-gradient(135deg,#F7E199,#D4AF37);color:#050507;font-weight:700;font-size:14px}
+.btn-s{padding:15px 32px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(200,205,213,.4);font-weight:600;font-size:14px}
+.book{position:relative;border-radius:28px;padding:40px;min-height:280px;display:flex;align-items:center;cursor:pointer;overflow:hidden}
+.cover{position:absolute;inset:0;border-radius:28px;background:linear-gradient(135deg,#131319,#08080A,#1C170C);border:1px solid rgba(212,175,55,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;z-index:20;transition:opacity .5s,transform .6s}
+.book.open .cover{opacity:0;transform:scale(.95);pointer-events:none}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{background:linear-gradient(145deg,rgba(24,24,30,.95),rgba(10,10,14,.98));border:1px solid rgba(200,205,213,.22);border-radius:20px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between}
+.card:hover{border-color:#D4AF37}
+.lbl{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:#D4AF37;margin-bottom:4px}
+.val{font-size:16px;font-weight:600}
+.dock{position:fixed;bottom:24px;right:24px;z-index:60;display:flex;flex-direction:column;align-items:flex-end}
+.win{width:340px;border-radius:24px;padding:18px;margin-bottom:14px;border:1px solid rgba(212,175,55,.45);background:rgba(10,10,14,.95);backdrop-filter:blur(20px)}
+.win.hide{display:none}
+.bot-btn{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#F7E199,#D4AF37);color:#050507;font-weight:800;font-size:13px;box-shadow:0 10px 25px rgba(212,175,55,.5)}
+</style>
+</head>
+<body>
+<div id="desktopGate"><div class="gate-card"><div style="font-size:32px">🖥</div><div class="gate-title">DESKTOP MODE REQUIRED</div><p style="font-size:14px;color:#C8CDD5">Please enable <b>Desktop site</b> in Chrome to view BM — The Next Dimension.</p><div class="gate-steps"><div>1. Tap <b>⋮ (Three Dots)</b> at top-right of Chrome.</div><div>2. Check the <b>Desktop site</b> box.</div></div></div></div>
+<div id="liquidDrop"></div>
+<div class="orb1"></div><div class="orb2"></div>
+<div class="nav-wrap"><nav class="nav glass"><a href="#home" class="logo">BM <span>DIMENSION</span></a><div class="links"><a href="#about">Identity</a><a href="#profiles">Profiles</a><a href="#contact" class="cta">Connect</a></div></nav></div>
+<main id="home" class="wrap">
+<section class="hero glass">
+<div class="pill">Official Digital Identity</div>
+<div class="ring"><div class="ring-in">BM</div></div>
+<h1>BM RAFI SARDAR</h1>
+<p class="sub">Bangladeshi Student · Dreamer · Builder</p>
+<div class="btns"><a href="#about" onclick="document.getElementById('book').classList.add('open')" class="btn-g">Open Interactive Book</a><button onclick="document.getElementById('win').classList.toggle('hide')" class="btn-s">Ask BM's AI Assistant</button></div>
+</section>
+<section id="about"><div id="book" onclick="this.classList.add('open')" class="book glass">
+<div class="cover"><div style="font-size:24px;color:#F7E199;margin-bottom:10px">✦</div><h2 style="color:#F7E199;letter-spacing:.16em;margin-bottom:8px">THE DIGITAL CODEX</h2><p style="font-size:14px;color:#8A93A2">Tap to unlock BM Rafi Sardar's Liquid Glass Dossier</p></div>
+<div style="width:100%"><div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:12px;margin-bottom:16px"><h3 style="color:#F7E199">About BM Rafi Sardar</h3><button onclick="event.stopPropagation();document.getElementById('book').classList.remove('open')" style="font-size:12px;color:#C8CDD5">Close ✕</button></div>
+<p style="margin-bottom:10px"><b>BM Rafi Sardar</b> (@RxBD96) is a Bangladeshi student, dreamer, and digital builder based in Tongi, Dhaka, Bangladesh.</p>
+<p style="color:#8A93A2;font-size:14px">Crafting a verified, futuristic digital identity and next-generation web experiences.</p></div>
+</div></section>
+<section id="profiles"><h2 style="text-align:center;color:#F7E199;letter-spacing:.18em;margin-bottom:24px">OFFICIAL PROFILES</h2>
+<div class="grid">
+<a href="https://www.bmrafisardar.xxxy.info/" target="_blank" class="card"><div><div class="lbl">Canonical Website</div><div class="val">bmrafisardar.xxxy.info</div></div><span>↗</span></a>
+<a href="https://facebook.com" target="_blank" class="card"><div><div class="lbl">Facebook</div><div class="val">@RxBD96</div></div><span>↗</span></a>
+<a href="https://youtube.com" target="_blank" class="card"><div><div class="lbl">YouTube</div><div class="val">@bmrafisardar</div></div><span>↗</span></a>
+<a href="https://github.com" target="_blank" class="card"><div><div class="lbl">GitHub</div><div class="val">://github.com</div></div><span>↗</span></a>
+</div></section>
+<footer id="contact" class="glass" style="border-radius:28px;padding:40px;text-align:center">
+<h3 style="color:#F7E199;letter-spacing:.15em;margin-bottom:8px">DIRECT CONTACT</h3>
+<a href="mailto:rx@bmrafisardar.xxxy.info" style="display:inline-block;margin-top:12px;padding:12px 26px;border-radius:999px;border:1px solid rgba(212,175,55,.5);color:#F7E199">rx@bmrafisardar.xxxy.info</a>
+<p style="margin-top:24px;font-size:12px;color:#8A93A2">© 2026 BM Rafi Sardar · Project: BM — The Next Dimension</p>
+</footer>
+</main>
+<div class="dock">
+<div id="win" class="win hide">
+<div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:8px;margin-bottom:10px;font-size:12px;color:#F7E199;font-weight:700"><span>BM AI ASSISTANT (DEMO)</span><button onclick="document.getElementById('win').classList.add('hide')">✕</button></div>
+<div id="msgs" style="max-height:160px;overflow-y:auto;font-size:13px;margin-bottom:10px"><div style="background:rgba(255,255,255,.06);padding:10px;border-radius:14px">Hello! I'm BM's AI Assistant. Ask me anything about BM Rafi Sardar.</div></div>
+    
