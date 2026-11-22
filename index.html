@@ -1,142 +1,678 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BM Express on active Oxno — BM Rafi Sardar</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:#050507;color:#F8FAFC;font-family:system-ui,-apple-system,sans-serif;min-height:100vh;overflow-x:hidden;line-height:1.6}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BM Express on active Oxno — BM Rafi Sardar</title>
+  <meta name="description" content="BM Express on active Oxno - Official digital hub of BM Rafi Sardar, Independent Content Creator & Student from Tongi, Dhaka, Bangladesh." />
 
-/* DESKTOP MODE POPUP */
-#desktopGate{position:fixed;inset:0;z-index:999999;background:radial-gradient(circle at top,#1A1508,#050507 80%);display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
-@media (min-width:750px){#desktopGate{display:none!important}}
-.gate-card{max-width:430px;width:100%;border-radius:28px;padding:34px 24px;background:rgba(255,255,255,.07);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(212,175,55,.55);box-shadow:0 30px 60px #000}
-.gate-robot{width:96px;height:96px;border-radius:50%;border:2px solid #D4AF37;box-shadow:0 0 28px rgba(212,175,55,.45);margin:0 auto 14px;background:#0B0B0F;display:flex;align-items:center;justify-content:center}
-.gate-title{font-size:21px;font-weight:700;letter-spacing:.08em;color:#F7E199;margin:8px 0 12px}
-.gate-msg{font-size:15px;color:#E2E8F0;line-height:1.65;margin-bottom:18px}
-.gate-steps{text-align:left;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:15px;font-size:13.5px;color:#E2E8F0;line-height:1.8}
-.gate-steps b{color:#F7E199}
+  <style>
+    /* ==========================================================================
+       1. ROOT VARIABLES & OBSIDIAN LIQUID GLASS THEME
+       ========================================================================== */
+    :root {
+      --bg-obsidian: #050507;
+      --bg-elevated: #0b0c10;
+      --gold-primary: #D4AF37;
+      --gold-light: #F7E199;
+      --gold-deep: #997A15;
+      --silver: #C8CDD5;
+      --silver-dim: rgba(200, 205, 213, 0.72);
+      --glass-bg: rgba(16, 17, 23, 0.56);
+      --glass-bg-strong: rgba(12, 13, 18, 0.78);
+      --glass-border: rgba(212, 175, 55, 0.28);
+      --glass-border-silver: rgba(200, 205, 213, 0.2);
+      --glass-highlight: rgba(247, 225, 153, 0.16);
+      --shadow-deep: 0 24px 64px rgba(0, 0, 0, 0.75);
+      --shadow-gold: 0 12px 36px rgba(212, 175, 55, 0.16);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-pill: 999px;
+      --transition-smooth: all 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+    }
 
-/* LIQUID GLASS TOUCH & POINTER LENS */
-#liquidLens{position:fixed;top:0;left:0;width:96px;height:96px;border-radius:50%;pointer-events:none;z-index:99999;opacity:0;transform:translate(-50%,-50%) scale(.4);transition:opacity .2s,transform .2s;backdrop-filter:blur(2px) brightness(1.25) contrast(1.15);-webkit-backdrop-filter:blur(2px) brightness(1.25) contrast(1.15);background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.45),rgba(255,255,255,.08) 35%,rgba(212,175,55,.15) 70%,rgba(255,255,255,.32));border:1.5px solid rgba(255,255,255,.6);box-shadow:0 14px 32px rgba(0,0,0,.65),inset 0 4px 12px rgba(255,255,255,.65)}
-#liquidLens.active{opacity:1;transform:translate(-50%,-50%) scale(1)}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.glass{background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.02));backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(212,175,55,.34);box-shadow:0 24px 48px rgba(0,0,0,.85)}
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-obsidian);
+      color: #F5F6F8;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+      overflow-x: hidden;
+    }
 
-/* FIXED CLEAN NAVIGATION BAR */
-.nav-wrap{position:fixed;top:22px;left:0;right:0;z-index:50;padding:0 24px;display:flex;justify-content:center}
-.nav{width:100%;max-width:1080px;border-radius:999px;padding:14px 30px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-weight:700;font-size:16px;letter-spacing:.1em;color:#F7E199;display:inline-flex;align-items:center;gap:8px}
-.logo span{color:#94A3B8;font-weight:400;font-size:12px;letter-spacing:.14em}
-.links{display:flex;align-items:center;gap:12px}
-.nav-pill{padding:9px 20px;border-radius:999px;font-size:13px;font-weight:600;color:#F8FAFC;background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.03));backdrop-filter:blur(12px);border:1px solid rgba(212,175,55,.45);box-shadow:0 4px 14px rgba(0,0,0,.4),inset 0 1px 1px rgba(255,255,255,.25)}
-.nav-pill:hover{border-color:#F7E199;color:#F7E199}
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(212, 175, 55, 0.11) 0%, transparent 42%),
+        radial-gradient(circle at 84% 28%, rgba(200, 205, 213, 0.08) 0%, transparent 44%),
+        radial-gradient(circle at 50% 88%, rgba(212, 175, 55, 0.09) 0%, transparent 48%),
+        var(--bg-obsidian);
+      color: #F5F6F8;
+      line-height: 1.65;
+      position: relative;
+      overflow-x: hidden;
+    }
 
-/* CLEAN SPACED LAYOUT */
-.wrap{position:relative;z-index:10;width:100%;max-width:1080px;margin:0 auto;padding:125px 24px 120px;display:flex;flex-direction:column;gap:40px}
-.hero{border-radius:32px;padding:54px 44px;text-align:center}
-.ring{width:118px;height:118px;margin:0 auto 24px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#F7E199,#C8CDD5,#997A15);box-shadow:0 0 35px rgba(212,175,55,.35)}
-.ring-in{width:100%;height:100%;border-radius:50%;background:#0A0A0E;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:700;color:#F7E199;letter-spacing:.05em}
-h1{font-size:44px;font-weight:700;color:#F7E199;margin-bottom:10px;letter-spacing:.02em}
-.sub{font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:#C8CDD5;margin-bottom:30px}
+    /* Ambient Subtle Mesh & Grid Glow */
+    .ambient-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200, 205, 213, 0.03) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at center, black 35%, transparent 82%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 82%);
+    }
 
-.bio-box{max-width:780px;margin:0 auto 32px;padding:26px 30px;border-radius:22px;background:rgba(0,0,0,.48);border:1px solid rgba(212,175,55,.28);text-align:left}
-.bio-title{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#D4AF37;margin-bottom:10px}
-.bio-text{font-size:15.5px;color:#E2E8F0;line-height:1.75}
-.bio-text b{color:#F7E199}
+    /* ==========================================================================
+       2. DESKTOP MODE REQUIRED GATE (MOBILE < 750PX)
+       ========================================================================== */
+    #desktopGate {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(5, 5, 7, 0.94);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
 
-.btns{display:flex;justify-content:center;gap:16px}
-.btn-g{padding:14px 32px;border-radius:999px;background:linear-gradient(135deg,#F7E199,#D4AF37);color:#050507;font-weight:700;font-size:14px;box-shadow:0 10px 25px rgba(212,175,55,.4)}
-.btn-s{padding:14px 32px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(200,205,213,.4);font-weight:600;font-size:14px}
+    @media (max-width: 749px) {
+      #desktopGate {
+        display: flex;
+      }
+      body {
+        overflow: hidden;
+      }
+    }
 
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.card{background:linear-gradient(145deg,rgba(24,24,30,.95),rgba(10,10,14,.98));border:1px solid rgba(200,205,213,.24);border-radius:22px;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;transition:border-color .25s}
-.card:hover{border-color:#D4AF37}
-.lbl{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:#D4AF37;margin-bottom:5px}
-.val{font-size:16px;font-weight:600;color:#FFFFFF}
+    .gate-modal {
+      width: 100%;
+      max-width: 440px;
+      background: linear-gradient(145deg, rgba(22, 23, 30, 0.85), rgba(10, 10, 14, 0.92));
+      border: 1.5px solid rgba(212, 175, 55, 0.45);
+      border-radius: var(--radius-xl);
+      padding: 32px 26px;
+      text-align: center;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(247, 225, 153, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
 
-/* VISIBLE FLOATING AI ROBOT IN VIEWPORT */
-.dock{position:fixed;bottom:32px;right:32px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end}
-.win{width:350px;border-radius:24px;padding:18px;margin-bottom:14px;border:1px solid rgba(212,175,55,.55);background:rgba(10,10,14,.96);backdrop-filter:blur(22px);box-shadow:0 24px 48px #000}
-.win.hide{display:none}
-.bot-btn{width:74px;height:74px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#F7E199,#D4AF37,#C8CDD5);box-shadow:0 12px 32px rgba(212,175,55,.6);display:flex;align-items:center;justify-content:center}
-.bot-inner{width:100%;height:100%;border-radius:50%;background:#09090D;display:flex;align-items:center;justify-content:center}
-</style>
-</head>
-<body>
+    .gate-modal::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -20%;
+      width: 140%;
+      height: 70%;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.16), transparent 65%);
+      pointer-events: none;
+    }
 
-<div id="desktopGate">
-<div class="gate-card">
-<div class="gate-robot">
-<svg width="54" height="54" viewBox="0 0 64 64" fill="none">
-<rect x="14" y="18" width="36" height="28" rx="12" fill="#18181F" stroke="#F7E199" stroke-width="2.5"/>
-<rect x="20" y="26" width="24" height="10" rx="5" fill="#D4AF37"/>
-<circle cx="26" cy="31" r="2.2" fill="#050507"/>
-<circle cx="38" cy="31" r="2.2" fill="#050507"/>
-<line x1="32" y1="10" x2="32" y2="18" stroke="#F7E199" stroke-width="2.5"/>
-<circle cx="32" cy="8" r="3.5" fill="#F7E199"/>
-<path d="M22 52C22 48 42 48 42 52" stroke="#C8CDD5" stroke-width="2.5" stroke-linecap="round"/>
-</svg>
-</div>
-<div class="gate-title">DESKTOP MODE REQUIRED</div>
-<p class="gate-msg">Hey প্রিয় অনুগ্রহ করে তোমার ওয়েবসাইটে থাকা desktop site টি অন করো</p>
-<div class="gate-steps">
-<div>1. Tap <b>⋮ (Three Dots)</b> at the top-right corner of Chrome.</div>
-<div>2. Turn ON the <b>Desktop site</b> checkbox.</div>
-</div>
-</div>
-</div>
+    .gate-robot-wrap {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, rgba(247, 225, 153, 0.18), rgba(5, 5, 7, 0.9));
+      border: 1.5px solid rgba(212, 175, 55, 0.55);
+      box-shadow: 0 12px 30px rgba(212, 175, 55, 0.25);
+      animation: floatGentle 3.6s ease-in-out infinite;
+    }
 
-<div id="liquidLens"></div>
+    .gate-title {
+      font-size: 1.28rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-primary), var(--silver));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
 
-<div class="nav-wrap">
-<nav class="nav glass">
-BM EXPRESS <span>ON ACTIVE OXNO</span></a>
-<div class="links">
-Identity</a>
-<a href="#profiles" class="nav-pill">Profiles</a>
-<a href="#contact" class="nav-pill">Connect</a>
-</div>
-</nav>
-</div>
+    .gate-bengali {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #F3F4F6;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
 
+    .gate-steps {
+      background: rgba(5, 5, 7, 0.72);
+      border: 1px solid rgba(200, 205, 213, 0.22);
+      border-radius: 16px;
+      padding: 16px 18px;
+      text-align: left;
+      font-size: 0.9rem;
+      color: var(--silver);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-<section class="hero glass">
-<div class="ring"><div class="ring-in">BM</div></div>
-<h1>BM Express on active Oxno</h1>
-<p class="sub">BM Rafi Sardar · Independent Content Creator & Student</p>
-<div class="bio-box">
-<div class="bio-title">About BM Rafi Sardar</div>
-<p class="bio-text">Independent content creator and student from <b>Tongi, Dhaka, Bangladesh</b>.<br><br><b>BM Rafi Sardar</b> is a Bangladeshi student, dreamer, and digital creator passionate about <b>technology, artificial intelligence, space</b>, and building creative digital experiences.</p>
-</div>
-<div class="btns">
-<a href="#profiles" class="btn-g">Explore Official Profiles</a>
-<button onclick="document.getElementById('win').classList.toggle('hide')" class="btn-s">Chat with BM Robot</button>
-</div>
-</section>
+    .gate-steps strong {
+      color: var(--gold-light);
+    }
 
-<section id="profiles">
-<div class="grid">
-<a href="https://xxxy.info" target="_blank" class="card"><div><div class="lbl">Canonical Website</div><div class="val">bmrafisardar.xxxy.info</div></div><span>↗</span></a>
-<a href="https://facebook.com" target="_blank" class="card"><div><div class="lbl">Facebook</div><div class="val">@RxBD96</div></div><span>↗</span></a>
-<a href="https://youtube.com" target="_blank" class="card"><div><div class="lbl">YouTube</div><div class="val">@bmrafisardar</div></div><span>↗</span></a>
-<a href="https://github.com" target="_blank" class="card"><div><div class="lbl">GitHub</div><div class="val">://github.com</div></div><span>↗</span></a>
-</div>
-</section>
+    /* ==========================================================================
+       3. FIXED TOP NAVIGATION BAR (ZERO OVERLAP GUARANTEED)
+       ========================================================================== */
+    .top-nav-wrapper {
+      position: fixed;
+      top: 18px;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      padding: 0 16px;
+    }
 
-<footer id="contact" class="glass" style="border-radius:26px;padding:36px;text-align:center">
-<h3 style="color:#F7E199;letter-spacing:.15em;margin-bottom:8px">DIRECT CONTACT</h3>
-<a href="mailto:rx@bmrafisardar.xxxy.info" class="nav-pill" style="display:inline-block;margin-top:8px;padding:11px 26px;color:#F7E199">rx@bmrafisardar.xxxy.info</a>
-<p style="margin-top:20px;font-size:12px;color:#8A93A2">© 2026 BM Rafi Sardar · BM Express on active Oxno</p>
-</footer>
-</main>
+    .top-nav {
+      width: 92%;
+      max-width: 980px;
+      height: 64px;
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 14px 0 24px;
+      border-radius: var(--radius-pill);
+      background: rgba(13, 14, 20, 0.74);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      border: 1px solid rgba(212, 175, 55, 0.34);
+      box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.68),
+        inset 0 1px 0 rgba(247, 225, 153, 0.24);
+    }
 
-<div class="dock">
-<div id="win" class="win hide">
-<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:8px;margin-bottom:10px;font-size:12px;color:#F7E199;font-weight:700">
-<span>BM AI ROBOT (DEMO)</span>
-<button onclick="document.getElementById('win').classList.add('hide')">✕</button>
-  
+    .brand-title {
+      white-space: nowrap;
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      background: linear-gradient(120deg, var(--gold-light) 0%, var(--gold-primary) 55%, var(--silver) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold-primary);
+      box-shadow: 0 0 12px var(--gold-light);
+      flex-shrink: 0;
+    }
+
+    .nav-pills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-pill-btn {
+      min-width: 112px;
+      height: 40px;
+      padding: 0 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(200, 205, 213, 0.24);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: var(--silver);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .nav-pill-btn:hover {
+      border-color: rgba(212, 175, 55, 0.58);
+      color: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.18), inset 0 1px 0 rgba(247, 225, 153, 0.25);
+    }
+
+    .nav-pill-btn.active {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.26), rgba(247, 225, 153, 0.1));
+      border-color: rgba(247, 225, 153, 0.65);
+      color: var(--gold-light);
+      box-shadow: 0 6px 24px rgba(212, 175, 55, 0.24), inset 0 1px 0 rgba(247, 225, 153, 0.35);
+    }
+
+    /* ==========================================================================
+       4. MAIN CENTERED CONTAINER & PAGE SWITCHER
+       ========================================================================== */
+    .main-container {
+      width: 92%;
+      max-width: 980px;
+      margin: 0 auto;
+      padding-top: 114px;
+      padding-bottom: 110px;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    .page-view {
+      display: none;
+      flex-direction: column;
+      gap: 36px;
+      animation: pageLiquidReveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .page-view.active {
+      display: flex;
+    }
+
+    @keyframes pageLiquidReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(16px) scale(0.985);
+        filter: blur(6px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    /* Unified Liquid Glass Card Base */
+    .glass-card {
+      background: linear-gradient(155deg, rgba(22, 24, 32, 0.64) 0%, rgba(10, 11, 16, 0.78) 100%);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      box-shadow:
+        var(--shadow-deep),
+        inset 0 1px 0 rgba(247, 225, 153, 0.22),
+        inset 0 -1px 0 rgba(200, 205, 213, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(125deg, rgba(255, 255, 255, 0.07) 0%, transparent 38%, transparent 72%, rgba(212, 175, 55, 0.06) 100%);
+    }
+
+    /* ==========================================================================
+       5. PAGE 1: HERO CARD & HOME SECTIONS
+       ========================================================================== */
+    .hero-card {
+      padding: 46px 40px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.34);
+      color: var(--gold-light);
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .status-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ADE80;
+      box-shadow: 0 0 10px #4ADE80;
+    }
+
+    /* Circular Gold-Rimmed BM Monogram */
+    .bm-monogram {
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(247, 225, 153, 0.22), rgba(8, 9, 13, 0.94) 70%);
+      border: 2px solid var(--gold-primary);
+      box-shadow:
+        0 0 0 6px rgba(212, 175, 55, 0.08),
+        0 18px 42px rgba(0, 0, 0, 0.8),
+        inset 0 2px 12px rgba(247, 225, 153, 0.35);
+      position: relative;
+      transition: var(--transition-smooth);
+    }
+
+    .bm-monogram:hover {
+      transform: scale(1.04) rotate(2deg);
+      box-shadow:
+        0 0 0 8px rgba(212, 175, 55, 0.14),
+        0 20px 50px rgba(212, 175, 55, 0.25),
+        inset 0 2px 14px rgba(247, 225, 153, 0.45);
+    }
+
+    .bm-monogram span {
+      font-size: 2.3rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      background: linear-gradient(145deg, #FFF5CC 0%, var(--gold-light) 35%, var(--gold-primary) 75%, #8C6D14 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    }
+
+    .hero-heading {
+      font-size: clamp(2rem, 3.6vw, 2.85rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.18;
+      background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-light) 48%, var(--gold-primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.08rem;
+      font-weight: 500;
+      color: var(--silver);
+      letter-spacing: 0.02em;
+      margin-top: -10px;
+    }
+
+    /* Inner Dark-Glass Box for Bio */
+    .hero-bio-box {
+      width: 100%;
+      max-width: 760px;
+      padding: 22px 26px;
+      border-radius: var(--radius-lg);
+      background: rgba(5, 5, 8, 0.66);
+      border: 1px solid rgba(200, 205, 213, 0.18);
+      box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.6);
+      color: #E5E7EB;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 6px;
+    }
+
+    .btn-gold {
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(247, 225, 153, 0.72);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.34), rgba(212, 175, 55, 0.14));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      color: var(--gold-light);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 28px rgba(212, 175, 55, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.48), rgba(247, 225, 153, 0.22));
+      box-shadow: 0 14px 36px rgba(212, 175, 55, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-silver {
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(200, 205, 213, 0.34);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.03));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      color: #F3F4F6;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    }
+
+    .btn-silver:hover {
+      transform: translateY(-2px);
+      border-color: rgba(212, 175, 55, 0.55);
+      color: var(--gold-light);
+      box-shadow: 0 14px 32px rgba(212, 175, 55, 0.16), inset 0 1px 0 rgba(247, 225, 153, 0.25);
+    }
+
+    /* Section Header */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      background: linear-gradient(120deg, #FFFFFF, var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--silver-dim);
+      padding: 5px 13px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(200, 205, 213, 0.18);
+    }
+
+    /* Verified Official Profile Cards (2x2 Clean Grid with Generous Spacing) */
+    .profiles-section {
+      padding: 34px 36px;
+    }
+
+    .verified-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .profile-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 24px;
+      border-radius: var(--radius-lg);
+      background: rgba(8, 9, 13, 0.72);
+      border: 1px solid rgba(200, 205, 213, 0.2);
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212, 175, 55, 0.62);
+      background: rgba(18, 19, 26, 0.85);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.65), 0 0 24px rgba(212, 175, 55, 0.15);
+    }
+
+    .profile-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .profile-icon-box {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.18), rgba(200, 205, 213, 0.06));
+      border: 1px solid rgba(212, 175, 55, 0.36);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-light);
+      flex-shrink: 0;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    }
+
+    .profile-meta {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .profile-platform {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gold-primary);
+    }
+
+    .profile-handle {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: #F9FAFB;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .profile-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(200, 205, 213, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--silver);
+      flex-shrink: 0;
+      transition: var(--transition-smooth);
+    }
+
+    .profile-card:hover .profile-arrow {
+      background: rgba(212, 175, 55, 0.22);
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+      transform: translate(2px, -2px);
+    }
+
+    /* ==========================================================================
+       6. HOME BOTTOM DOCKED 3D CUTE AI ROBOT STAGE
+       ========================================================================== */
+    .home-robot-stage {
+      padding: 30px 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      background: linear-gradient(135deg, rgba(20, 21, 28, 0.76), rgba(8, 9, 13, 0.88));
+      border: 1.5px solid rgba(212, 175, 55, 0.42);
+    }
+
+    .robot-3d-pedestal {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      cursor: pointer;
+    }
+
+    /* 3D Perspective Container for Custom Photo or Built-in 3D Robot */
+    .robot-3d-frame {
+      width: 118px;
+      height: 118px;
+      perspective: 700px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .robot-3d-body {
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      background: radial-gradient(circle at 30% 20%, rgba(247, 225, 153, 0.24), rgba(10, 11, 16, 0.96) 72%);
+      border: 2px solid rgba(212, 175, 55, 0.65);
+      box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.85),
+        0 0 28px rgba(212, 175, 55, 0.25),
+        inset 0 2px 10px rgba(247, 225, 153, 0.38);
+      transform-style: preserve-3d;
+      animation: robot3DIdle 4.8s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: rel
