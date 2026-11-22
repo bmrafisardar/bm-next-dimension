@@ -405,26 +405,46 @@
     }
 
     /* Liquid Glass Lens (#liquidLens) */
-    #liquidLens {
+        #liquidLens {
       position: fixed;
       top: 0;
       left: 0;
-      width: 90px;
-      height: 90px;
-      margin-left: -45px;
-      margin-top: -45px;
+      width: 112px;
+      height: 112px;
+      margin-left: -56px;
+      margin-top: -56px;
       border-radius: 50%;
       pointer-events: none;
-      z-index: 9998;
+      z-index: 100000;
       opacity: 0;
-      background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.35), rgba(212, 175, 55, 0.18));
-      backdrop-filter: blur(6px) saturate(1.4);
-      -webkit-backdrop-filter: blur(6px) saturate(1.4);
-      border: 1.5px solid rgba(247, 225, 153, 0.65);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), inset 0 2px 8px rgba(255, 255, 255, 0.45);
-      transition: opacity 0.22s ease;
+      transform: translate3d(-200px, -200px, 0) scale(0.35);
+      background:
+        radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.45) 0%, rgba(247, 225, 153, 0.2) 28%, rgba(255, 255, 255, 0.05) 62%, rgba(212, 175, 55, 0.28) 100%);
+      backdrop-filter: blur(7px) contrast(1.2) saturate(1.5) brightness(1.12);
+      -webkit-backdrop-filter: blur(7px) contrast(1.2) saturate(1.5) brightness(1.12);
+      border: 1.5px solid rgba(247, 225, 153, 0.82);
+      box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.55),
+        0 0 28px rgba(212, 175, 55, 0.35),
+        inset 0 3px 10px rgba(255, 255, 255, 0.65),
+        inset 0 -4px 12px rgba(212, 175, 55, 0.42),
+        inset 2px 0 8px rgba(200, 205, 213, 0.4);
+      will-change: transform, opacity;
     }
 
+    #liquidLens::before {
+      content: "";
+      position: absolute;
+      top: 13%;
+      left: 17%;
+      width: 34%;
+      height: 18%;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.72);
+      transform: rotate(-28deg);
+      filter: blur(1px);
+    }
+    
     /* Floating Mini AI Robot Assistant */
     #floatingRobot {
       position: fixed;
@@ -695,3 +715,115 @@
             </div>
             <span>↗</span>
           <
+  (function setupLens() {
+      const lens = document.getElementById("liquidLens");
+      if (!lens) return;
+
+      let targetX = window.innerWidth / 2;
+      let targetY = window.innerHeight / 2;
+      let currentX = targetX;
+      let currentY = targetY;
+
+      let targetScale = 0.3;
+      let currentScale = 0.3;
+      let targetOpacity = 0;
+      let currentOpacity = 0;
+
+      let holdTimer = null;
+      let isHolding = false;
+      let mouseTimer = null;
+
+      function showLens(x, y) {
+        targetX = x;
+        targetY = y;
+        targetScale = 1.08;
+        targetOpacity = 1;
+      }
+
+      function hideLens() {
+        targetScale = 0.3;
+        targetOpacity = 0;
+      }
+
+      window.addEventListener("touchstart", (e) => {
+        if (!e.touches.length) return;
+        const t = e.touches[0];
+        isHolding = true;
+        currentX = t.clientX;
+        currentY = t.clientY;
+        targetX = t.clientX;
+        targetY = t.clientY;
+
+        clearTimeout(holdTimer);
+        holdTimer = setTimeout(() => {
+          if (isHolding) {
+            showLens(t.clientX, t.clientY);
+          }
+        }, 70);
+      }, { passive: true });
+
+      window.addEventListener("touchmove", (e) => {
+        if (!e.touches.length) return;
+        const t = e.touches[0];
+        clearTimeout(holdTimer);
+        showLens(t.clientX, t.clientY);
+      }, { passive: true });
+
+      window.addEventListener("touchend", () => {
+        isHolding = false;
+        clearTimeout(holdTimer);
+        hideLens();
+      }, { passive: true });
+
+      window.addEventListener("touchcancel", () => {
+        isHolding = false;
+        clearTimeout(holdTimer);
+        hideLens();
+      }, { passive: true });
+
+      window.addEventListener("pointermove", (e) => {
+        if (e.pointerType === "touch") return;
+        showLens(e.clientX, e.clientY);
+        clearTimeout(mouseTimer);
+        mouseTimer = setTimeout(() => {
+          if (!isHolding) hideLens();
+        }, 1200);
+      });
+
+      window.addEventListener("pointerdown", (e) => {
+        if (e.pointerType === "touch") return;
+        isHolding = true;
+        showLens(e.clientX, e.clientY);
+      });
+
+      window.addEventListener("pointerup", (e) => {
+        if (e.pointerType === "touch") return;
+        isHolding = false;
+      });
+
+      function tick() {
+        const dx = targetX - currentX;
+        const dy = targetY - currentY;
+
+        currentX += dx * 0.095;
+        currentY += dy * 0.095;
+
+        currentScale += (targetScale - currentScale) * 0.09;
+        currentOpacity += (targetOpacity - currentOpacity) * 0.1;
+
+        const speed = Math.hypot(dx, dy);
+        const stretch = Math.min(speed * 0.0045, 0.28);
+        const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+        const scaleX = currentScale * (1 + stretch);
+        const scaleY = currentScale * (1 - stretch * 0.45);
+
+        lens.style.opacity = currentOpacity.toFixed(3);
+        lens.style.transform = `translate3d(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px, 0) rotate(${angle.toFixed(1)}deg) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)})`;
+
+        requestAnimationFrame(tick);
+      }
+
+      requestAnimationFrame(tick);
+    })();
+            
