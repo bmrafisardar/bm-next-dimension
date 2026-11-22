@@ -715,117 +715,142 @@
             </div>
             <span>↗</span>
               <div id="liquidLens"></div>
-    <script>
-      
-  (function setupLens() {
-      const lens = document.getElementById("liquidLens");
-      if (!lens) return;
+                  <script>
+      (function setupLens() {
+        const lens = document.getElementById("liquidLens");
+        if (!lens) return;
 
-      let targetX = window.innerWidth / 2;
-      let targetY = window.innerHeight / 2;
-      let currentX = targetX;
-      let currentY = targetY;
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 2;
+        let currentX = -200;
+        let currentY = -200;
 
-      let targetScale = 0.3;
-      let currentScale = 0.3;
-      let targetOpacity = 0;
-      let currentOpacity = 0;
+        let targetScale = 0.25;
+        let currentScale = 0.25;
+        let targetOpacity = 0;
+        let currentOpacity = 0;
 
-      let holdTimer = null;
-      let isHolding = false;
-      let mouseTimer = null;
+        let isActive = false;
+        let wobblePhase = 0;
+        let hideTimer = null;
 
-      function showLens(x, y) {
-        targetX = x;
-        targetY = y;
-        targetScale = 1.08;
-        targetOpacity = 1;
-      }
+        function getRandomEdgeSpawn(tx, ty) {
+          const w = window.innerWidth;
+          const h = window.innerHeight;
+          const side = Math.floor(Math.random() * 4);
+          if (side === 0) return { x: tx + (Math.random() - 0.5) * 240, y: -110 };      // উপর থেকে
+          if (side === 1) return { x: w + 110, y: ty + (Math.random() - 0.5) * 240 };   // ডান পাশ থেকে
+          if (side === 2) return { x: tx + (Math.random() - 0.5) * 240, y: h + 110 };   // নিচ থেকে
+          return { x: -110, y: ty + (Math.random() - 0.5) * 240 };                      // বাম পাশ থেকে
+        }
 
-      function hideLens() {
-        targetScale = 0.3;
-        targetOpacity = 0;
-      }
-
-      window.addEventListener("touchstart", (e) => {
-        if (!e.touches.length) return;
-        const t = e.touches[0];
-        isHolding = true;
-        currentX = t.clientX;
-        currentY = t.clientY;
-        targetX = t.clientX;
-        targetY = t.clientY;
-
-        clearTimeout(holdTimer);
-        holdTimer = setTimeout(() => {
-          if (isHolding) {
-            showLens(t.clientX, t.clientY);
+        function triggerLens(x, y) {
+          clearTimeout(hideTimer);
+          if (!isActive || currentOpacity < 0.15) {
+            const edge = getRandomEdgeSpawn(x, y);
+            currentX = edge.x;
+            currentY = edge.y;
+            currentScale = 0.55;
           }
-        }, 70);
-      }, { passive: true });
+          isActive = true;
+          targetX = x;
+          targetY = y;
+          targetScale = 1.06;
+          targetOpacity = 1;
+        }
 
-      window.addEventListener("touchmove", (e) => {
-        if (!e.touches.length) return;
-        const t = e.touches[0];
-        clearTimeout(holdTimer);
-        showLens(t.clientX, t.clientY);
-      }, { passive: true });
+        function moveLens(x, y) {
+          if (!isActive) {
+            triggerLens(x, y);
+            return;
+          }
+          clearTimeout(hideTimer);
+          targetX = x;
+          targetY = y;
+          targetScale = 1.08;
+          targetOpacity = 1;
+        }
 
-      window.addEventListener("touchend", () => {
-        isHolding = false;
-        clearTimeout(holdTimer);
-        hideLens();
-      }, { passive: true });
+        function releaseLens() {
+          clearTimeout(hideTimer);
+          hideTimer = setTimeout(() => {
+            isActive = false;
+            targetScale = 0.25;
+            targetOpacity = 0;
+          }, 450);
+        }
 
-      window.addEventListener("touchcancel", () => {
-        isHolding = false;
-        clearTimeout(holdTimer);
-        hideLens();
-      }, { passive: true });
+        window.addEventListener("touchstart", (e) => {
+          if (!e.touches.length) return;
+          const t = e.touches[0];
+          triggerLens(t.clientX, t.clientY);
+        }, { passive: true });
 
-      window.addEventListener("pointermove", (e) => {
-        if (e.pointerType === "touch") return;
-        showLens(e.clientX, e.clientY);
-        clearTimeout(mouseTimer);
-        mouseTimer = setTimeout(() => {
-          if (!isHolding) hideLens();
-        }, 1200);
-      });
+        window.addEventListener("touchmove", (e) => {
+          if (!e.touches.length) return;
+          const t = e.touches[0];
+          moveLens(t.clientX, t.clientY);
+        }, { passive: true });
 
-      window.addEventListener("pointerdown", (e) => {
-        if (e.pointerType === "touch") return;
-        isHolding = true;
-        showLens(e.clientX, e.clientY);
-      });
+        window.addEventListener("touchend", () => {
+          releaseLens();
+        }, { passive: true });
 
-      window.addEventListener("pointerup", (e) => {
-        if (e.pointerType === "touch") return;
-        isHolding = false;
-      });
+        window.addEventListener("touchcancel", () => {
+          releaseLens();
+        }, { passive: true });
 
-      function tick() {
-        const dx = targetX - currentX;
-        const dy = targetY - currentY;
+        window.addEventListener("pointerdown", (e) => {
+          if (e.pointerType === "touch") return;
+          triggerLens(e.clientX, e.clientY);
+        });
 
-        currentX += dx * 0.095;
-        currentY += dy * 0.095;
+        window.addEventListener("pointermove", (e) => {
+          if (e.pointerType === "touch") return;
+          if (e.buttons > 0 || isActive) {
+            moveLens(e.clientX, e.clientY);
+          }
+        });
 
-        currentScale += (targetScale - currentScale) * 0.09;
-        currentOpacity += (targetOpacity - currentOpacity) * 0.1;
+        window.addEventListener("pointerup", (e) => {
+          if (e.pointerType === "touch") return;
+          releaseLens();
+        });
 
-        const speed = Math.hypot(dx, dy);
-        const stretch = Math.min(speed * 0.0045, 0.28);
-        const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+        function tick() {
+          wobblePhase += 0.085;
 
-        const scaleX = currentScale * (1 + stretch);
-        const scaleY = currentScale * (1 - stretch * 0.45);
+          const dx = targetX - currentX;
+          const dy = targetY - currentY;
 
-        lens.style.opacity = currentOpacity.toFixed(3);
-        lens.style.transform = `translate3d(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px, 0) rotate(${angle.toFixed(1)}deg) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)})`;
+          // স্লো ও স্মুথ লিকুইড ফ্লোটিং গতি
+          currentX += dx * 0.058;
+          currentY += dy * 0.058;
+
+          currentScale += (targetScale - currentScale) * 0.075;
+          currentOpacity += (targetOpacity - currentOpacity) * 0.09;
+
+          // দুলতে দুলতে আসার জেলি/লিকুইড ওয়েভ ইফেক্ট
+          const speed = Math.hypot(dx, dy);
+          const swingX = Math.sin(wobblePhase) * (isActive ? 5.5 : 0);
+          const swingY = Math.cos(wobblePhase * 0.85) * (isActive ? 5.5 : 0);
+
+          const jellyWave = Math.sin(wobblePhase * 1.4) * 0.075;
+          const stretch = Math.min(speed * 0.0022, 0.24);
+          const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+
+          const scaleX = currentScale * (1 + stretch + jellyWave);
+          const scaleY = currentScale * (1 - stretch * 0.4 - jellyWave);
+
+          lens.style.opacity = currentOpacity.toFixed(3);
+          lens.style.transform = `translate3d(${(currentX + swingX).toFixed(2)}px, ${(currentY + swingY).toFixed(2)}px, 0) rotate(${angle.toFixed(1)}deg) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)})`;
+
+          requestAnimationFrame(tick);
+        }
 
         requestAnimationFrame(tick);
-      }
-
-      requestAnimationFrame(tick);
-    })();
+      })();
+    </script>
+  </body>
+          </html>
             
