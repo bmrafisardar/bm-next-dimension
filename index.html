@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BM Express on active Oxno</title>
+  <title>BM Rafi Sardar — BM Next Dimension</title>
   <style>
     :root {
-      --bg-obsidian: #050507;
-      --gold-primary: #D4AF37;
-      --gold-light: #F7E199;
-      --silver: #C8CDD5;
-      --glass-surface: rgba(16, 17, 24, 0.72);
-      --glass-border: rgba(212, 175, 55, 0.34);
+      --bg-dark: #06070a;
+      --bg-card: rgba(12, 14, 20, 0.86);
+      --glass-surface: rgba(14, 17, 24, 0.78);
+      --glass-border: rgba(212, 175, 55, 0.32);
+      --gold-primary: #d4af37;
+      --gold-light: #f7e199;
+      --silver: #c8cdd5;
+      --text-main: #f5f6f8;
     }
 
     * {
@@ -20,155 +22,143 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       min-height: 100vh;
-      background-color: var(--bg-obsidian);
-      background-image:
-        radial-gradient(circle at 20% 15%, rgba(212, 175, 55, 0.14), transparent 42%),
-        radial-gradient(circle at 80% 30%, rgba(200, 205, 213, 0.08), transparent 45%);
-      color: #F5F6F8;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      line-height: 1.6;
+      background:
+        radial-gradient(circle at 18% 15%, rgba(212, 175, 55, 0.14), transparent 42%),
+        radial-gradient(circle at 82% 78%, rgba(247, 225, 153, 0.09), transparent 45%),
+        var(--bg-dark);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
       overflow-x: hidden;
     }
 
-    /* Desktop Mode Gate (< 750px) */
+    /* Desktop Mode Required Gate */
     #desktopGate {
       display: none;
       position: fixed;
       inset: 0;
-      z-index: 99999;
-      background: rgba(5, 5, 7, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(5, 6, 9, 0.96);
+      z-index: 10000;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-    }
-
-    @media (max-width: 749px) {
-      #desktopGate {
-        display: flex;
-      }
+      padding: 24px;
+      text-align: center;
     }
 
     .gate-box {
-      width: 100%;
       max-width: 420px;
-      background: rgba(15, 16, 22, 0.88);
-      border: 1.5px solid var(--gold-primary);
-      border-radius: 24px;
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: 22px;
       padding: 28px 22px;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
     }
 
     .gate-title {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--gold-light);
-      letter-spacing: 0.08em;
-      margin: 12px 0 10px;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
     }
 
     .gate-msg {
-      font-size: 1rem;
-      color: #FFFFFF;
-      margin-bottom: 18px;
+      font-size: 0.92rem;
+      color: var(--silver);
+      margin-bottom: 16px;
     }
 
     .gate-list {
       text-align: left;
-      background: rgba(5, 5, 7, 0.75);
-      border: 1px solid rgba(200, 205, 213, 0.2);
-      border-radius: 14px;
-      padding: 14px 16px;
-      color: var(--silver);
-      font-size: 0.9rem;
+      font-size: 0.86rem;
+      color: var(--text-main);
       display: flex;
       flex-direction: column;
       gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     /* Top Navigation Bar */
     .top-nav-wrap {
-      position: fixed;
-      top: 18px;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      padding: 0 16px;
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      padding: 14px 18px;
+      background: rgba(6, 7, 10, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.16);
     }
 
     .top-nav {
-      width: 92%;
       max-width: 980px;
-      min-height: 62px;
-      padding: 10px 18px;
-      border-radius: 999px;
-      background: rgba(13, 14, 20, 0.78);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .brand-label {
-      white-space: nowrap;
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 800;
-      letter-spacing: 0.1em;
       color: var(--gold-light);
+      letter-spacing: 0.06em;
       cursor: pointer;
     }
 
     .nav-group {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .nav-btn {
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(200, 205, 213, 0.25);
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
       color: var(--silver);
-      font-size: 0.84rem;
+      border: 1px solid rgba(200, 205, 213, 0.22);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
-      transition: 0.25s ease;
+      transition: 0.2s ease;
     }
 
     .nav-btn.active,
     .nav-btn:hover {
-      border-color: var(--gold-primary);
-      background: rgba(212, 175, 55, 0.22);
+      background: rgba(212, 175, 55, 0.2);
       color: var(--gold-light);
+      border-color: var(--gold-primary);
     }
 
-    /* Main Container */
+    /* Main Container & Sections */
     .container {
-      width: 92%;
       max-width: 980px;
       margin: 0 auto;
-      padding-top: 110px;
-      padding-bottom: 100px;
+      padding: 28px 18px 96px;
       display: flex;
       flex-direction: column;
-      gap: 36px;
+      gap: 28px;
     }
 
     .page-section {
       display: none;
       flex-direction: column;
-      gap: 36px;
+      gap: 28px;
     }
 
     .page-section.active {
@@ -181,7 +171,7 @@
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       border-radius: 26px;
-      padding: 34px;
+      padding: 28px 24px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
     }
 
@@ -191,7 +181,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
 
     .bm-circle {
@@ -199,53 +189,53 @@
       height: 104px;
       border-radius: 50%;
       border: 2px solid var(--gold-primary);
-      background: radial-gradient(circle at 30% 25%, rgba(247, 225, 153, 0.2), rgba(7, 8, 12, 0.95));
+      background: radial-gradient(circle at 30% 25%, rgba(247, 225, 153, 0.22), rgba(7, 8, 12, 0.95));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.2rem;
-      font-weight: 900;
+      font-size: 2.1rem;
+      font-weight: 800;
       color: var(--gold-light);
       box-shadow: 0 10px 28px rgba(212, 175, 55, 0.22);
     }
 
     .hero-title {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #ffffff;
     }
 
     .hero-sub {
-      font-size: 1.02rem;
+      font-size: 1rem;
       color: var(--silver);
     }
 
     .bio-box {
       max-width: 740px;
-      background: rgba(5, 5, 7, 0.68);
+      background: rgba(5, 6, 7, 0.68);
       border: 1px solid rgba(200, 205, 213, 0.18);
       border-radius: 18px;
-      padding: 20px 24px;
-      color: #E5E7EB;
-      font-size: 0.98rem;
+      padding: 18px 22px;
+      color: #e5e7eb;
+      font-size: 0.96rem;
     }
 
     .hero-btns {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 14px;
+      gap: 12px;
       margin-top: 6px;
     }
 
     .action-btn-gold {
-      padding: 12px 24px;
+      padding: 11px 22px;
       border-radius: 999px;
       border: 1px solid var(--gold-light);
       background: rgba(212, 175, 55, 0.28);
       color: var(--gold-light);
       font-weight: 700;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: 0.25s ease;
     }
@@ -255,13 +245,13 @@
     }
 
     .action-btn-silver {
-      padding: 12px 24px;
+      padding: 11px 22px;
       border-radius: 999px;
       border: 1px solid rgba(200, 205, 213, 0.35);
       background: rgba(255, 255, 255, 0.06);
-      color: #FFFFFF;
+      color: #ffffff;
       font-weight: 600;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       cursor: pointer;
       transition: 0.25s ease;
     }
@@ -273,28 +263,34 @@
 
     /* 2x2 Official Profile Cards */
     .section-heading {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--gold-light);
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .grid-2x2 {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
+      gap: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .grid-2x2 {
+        grid-template-columns: 1fr;
+      }
     }
 
     .link-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 22px;
+      padding: 18px 20px;
       border-radius: 18px;
       background: rgba(6, 7, 10, 0.78);
       border: 1px solid rgba(200, 205, 213, 0.22);
       text-decoration: none;
-      color: #FFFFFF;
+      color: #ffffff;
       transition: 0.25s ease;
     }
 
@@ -305,17 +301,19 @@
 
     .link-title {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 700;
       color: var(--gold-primary);
       text-transform: uppercase;
       letter-spacing: 0.06em;
+      margin-bottom: 4px;
     }
 
     .link-value {
-      font-size: 1rem;
+      font-size: 0.96rem;
       font-weight: 600;
-      color: #FFFFFF;
+      color: #ffffff;
+      word-break: break-word;
     }
 
     /* Home Bottom 3D Robot Stage */
@@ -324,48 +322,42 @@
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 18px;
       border-color: rgba(212, 175, 55, 0.45);
     }
 
     .robot-left {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
       cursor: pointer;
     }
 
     .robot-3d-box {
-      width: 96px;
-      height: 96px;
-      border-radius: 24px;
+      width: 84px;
+      height: 84px;
+      border-radius: 22px;
       background: radial-gradient(circle at 30% 25%, rgba(247, 225, 153, 0.22), rgba(7, 8, 12, 0.96));
       border: 2px solid var(--gold-primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      transform: perspective(600px) rotateY(-8deg);
       transition: transform 0.4s ease;
       overflow: hidden;
+      flex-shrink: 0;
     }
 
     .robot-3d-box:hover {
       transform: perspective(600px) rotateY(8deg) scale(1.04);
     }
 
-    .robot-3d-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
     .robot-bubble {
       background: rgba(212, 175, 55, 0.12);
       border: 1px solid rgba(247, 225, 153, 0.4);
-      border-radius: 18px;
-      padding: 14px 20px;
-      color: #FFFFFF;
-      font-size: 1.05rem;
+      border-radius: 16px;
+      padding: 12px 18px;
+      color: #ffffff;
+      font-size: 1rem;
       font-weight: 700;
     }
 
@@ -373,7 +365,13 @@
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
+      gap: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .photo-box {
@@ -390,7 +388,7 @@
       width: 100%;
       aspect-ratio: 16 / 10;
       border-radius: 14px;
-      background: #090A0F;
+      background: #090a0f;
       border: 1px solid rgba(200, 205, 213, 0.16);
       display: flex;
       align-items: center;
@@ -404,8 +402,8 @@
       object-fit: cover;
     }
 
-    /* Liquid Glass Lens (#liquidLens) */
-                #liquidLens {
+    /* Clear Transparent Liquid Glass Lens (#liquidLens) */
+    #liquidLens {
       position: fixed;
       top: 0;
       left: 0;
@@ -417,15 +415,11 @@
       pointer-events: none;
       z-index: 9999;
       opacity: 0;
-      background:
-        radial-gradient(circle at 25% 22%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 45%, rgba(255, 255, 255, 0) 72%, rgba(255, 255, 255, 0.08) 100%);
+      background: radial-gradient(circle at 25% 22%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 45%, rgba(255, 255, 255, 0) 72%, rgba(255, 255, 255, 0.08) 100%);
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
       border: 1.5px solid rgba(255, 255, 255, 0.45);
-      box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.25),
-        inset 0 2px 6px rgba(255, 255, 255, 0.45),
-        inset 0 -3px 7px rgba(255, 255, 255, 0.14);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), inset 0 2px 6px rgba(255, 255, 255, 0.45), inset 0 -3px 7px rgba(255, 255, 255, 0.14);
     }
 
     #liquidLens::before {
@@ -440,16 +434,15 @@
       transform: rotate(-28deg);
       filter: blur(0.6px);
     }
-    
-    
+
     /* Floating Mini AI Robot Assistant */
     #floatingRobot {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      z-index: 9999;
-      width: 62px;
-      height: 62px;
+      z-index: 9998;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       border: 1.5px solid var(--gold-light);
       background: rgba(12, 13, 18, 0.92);
@@ -465,13 +458,13 @@
     #chatPanel {
       display: none;
       position: fixed;
-      bottom: 98px;
+      bottom: 94px;
       right: 24px;
-      z-index: 9999;
+      z-index: 9998;
       width: 340px;
       max-width: calc(100vw - 48px);
       border-radius: 22px;
-      background: rgba(12, 13, 19, 0.94);
+      background: rgba(12, 13, 19, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1.5px solid var(--gold-primary);
@@ -507,8 +500,8 @@
     .chat-msg {
       padding: 10px 12px;
       border-radius: 14px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(200, 205, 213, 0.16);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(200, 205, 213, 0.15);
     }
 
     .chat-msg.user {
@@ -548,7 +541,7 @@
       border-radius: 999px;
       border: 1px solid rgba(200, 205, 213, 0.25);
       background: rgba(255, 255, 255, 0.06);
-      color: #FFFFFF;
+      color: #ffffff;
       font-size: 0.85rem;
       outline: none;
     }
@@ -556,7 +549,7 @@
     .chat-form button {
       padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid var(--gold-primary);
+      border: 1px solid var(--gold-light);
       background: rgba(212, 175, 55, 0.28);
       color: var(--gold-light);
       font-weight: 700;
@@ -565,22 +558,21 @@
   </style>
 </head>
 <body>
-
   <!-- Desktop Mode Required Gate -->
   <div id="desktopGate">
     <div class="gate-box">
       <svg width="58" height="58" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="50" y1="10" x2="50" y2="24" stroke="#F7E199" stroke-width="4" stroke-linecap="round"/>
-        <circle cx="50" cy="9" r="5" fill="#D4AF37"/>
-        <rect x="22" y="24" width="56" height="42" rx="16" fill="#0B0C10" stroke="#D4AF37" stroke-width="4"/>
-        <circle cx="40" cy="44" r="4.5" fill="#F7E199"/>
-        <circle cx="60" cy="44" r="4.5" fill="#F7E199"/>
-        <rect x="32" y="70" width="36" height="18" rx="9" fill="#0B0C10" stroke="#C8CDD5" stroke-width="3"/>
+        <line x1="50" y1="10" x2="50" y2="24" stroke="#F7E199" stroke-width="4" stroke-linecap="round" />
+        <circle cx="50" cy="9" r="5" fill="#D4AF37" />
+        <rect x="22" y="24" width="56" height="42" rx="16" fill="#0B0C10" stroke="#D4AF37" stroke-width="4" />
+        <circle cx="40" cy="44" r="4.5" fill="#F7E199" />
+        <circle cx="60" cy="44" r="4.5" fill="#F7E199" />
+        <rect x="32" y="70" width="36" height="18" rx="9" fill="#0B0C10" stroke="#C8CDD5" stroke-width="3" />
       </svg>
       <div class="gate-title">DESKTOP MODE REQUIRED</div>
-      <div class="gate-msg">Hey প্রিয় অনুগ্রহ করে তোমার ওয়েবসাইটে থাকা desktop site টি অন করো</div>
+      <div class="gate-msg">এই পেজ পুরোপুরি দেখতে চাইলে ব্রাউজারে Desktop site অন করো।</div>
       <div class="gate-list">
-        <div><strong>1.</strong> Tap ⋮ (Three Dots) at the top-right corner of Chrome.</div>
+        <div><strong>1.</strong> Tap &#8942; (Three Dots) at the top-right corner of Chrome.</div>
         <div><strong>2.</strong> Turn ON the Desktop site checkbox.</div>
       </div>
     </div>
@@ -589,7 +581,7 @@
   <!-- Top Navigation Bar -->
   <div class="top-nav-wrap">
     <nav class="top-nav">
-      <div class="brand-label" onclick="openPage('home')">BM EXPRESS ON ACTIVE OXNO</div>
+      <div class="brand-label" onclick="openPage('home')">BM EXPRESS ON ACTIVE DIMO</div>
       <div class="nav-group">
         <button class="nav-btn active" id="nav-home" onclick="openPage('home')">Identity</button>
         <button class="nav-btn" id="nav-about" onclick="openPage('about')">Profiles</button>
@@ -600,15 +592,14 @@
 
   <!-- Main Content -->
   <main class="container">
-
     <!-- Page 1: Home -->
     <section id="page-home" class="page-section active">
       <div class="glass-card hero-card">
         <div class="bm-circle">BM</div>
-        <h1 class="hero-title">BM Express on active Oxno</h1>
+        <h1 class="hero-title">BM Express on Active Dimo</h1>
         <p class="hero-sub">BM Rafi Sardar · Independent Content Creator &amp; Student</p>
         <div class="bio-box">
-          Independent content creator and student from Tongi, Dhaka, Bangladesh. BM Rafi Sardar is a Bangladeshi student, dreamer, and digital creator passionate about technology, artificial intelligence, space, and building creative digital experiences.
+          Independent content creator and student from Tongi, Dhaka, Bangladesh. BM Rafi Sardar is a Bangladeshi student and creator building digital presence across social and web platforms.
         </div>
         <div class="hero-btns">
           <button class="action-btn-gold" onclick="openPage('about')">Explore Official Profiles</button>
@@ -625,7 +616,7 @@
               <span class="link-title">Canonical Website</span>
               <span class="link-value">bmrafisardar.xxxy.info</span>
             </div>
-            <span>↗</span>
+            <span>&#8599;</span>
           </a>
 
           <a class="link-card" href="https://facebook.com/RxBD96" target="_blank" rel="noopener noreferrer">
@@ -633,7 +624,7 @@
               <span class="link-title">Facebook</span>
               <span class="link-value">@RxBD96</span>
             </div>
-            <span>↗</span>
+            <span>&#8599;</span>
           </a>
 
           <a class="link-card" href="https://youtube.com/@bmrafisardar" target="_blank" rel="noopener noreferrer">
@@ -641,7 +632,7 @@
               <span class="link-title">YouTube</span>
               <span class="link-value">@bmrafisardar</span>
             </div>
-            <span>↗</span>
+            <span>&#8599;</span>
           </a>
 
           <a class="link-card" href="https://github.com/bmrafisardar" target="_blank" rel="noopener noreferrer">
@@ -649,7 +640,7 @@
               <span class="link-title">GitHub</span>
               <span class="link-value">github.com/bmrafisardar</span>
             </div>
-            <span>↗</span>
+            <span>&#8599;</span>
           </a>
         </div>
       </div>
@@ -659,16 +650,16 @@
         <div class="robot-left" onclick="toggleChat(true)">
           <div class="robot-3d-box" id="robot3dSlot">
             <svg width="68" height="68" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="50" y1="10" x2="50" y2="23" stroke="#F7E199" stroke-width="4" stroke-linecap="round"/>
-              <circle cx="50" cy="9" r="5" fill="#D4AF37"/>
-              <rect x="22" y="23" width="56" height="42" rx="16" fill="#0B0C10" stroke="#D4AF37" stroke-width="4"/>
-              <circle cx="40" cy="43" r="4.5" fill="#F7E199"/>
-              <circle cx="60" cy="43" r="4.5" fill="#F7E199"/>
-              <path d="M44 51 Q50 55 56 51" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round"/>
-              <rect x="32" y="69" width="36" height="18" rx="9" fill="#0B0C10" stroke="#C8CDD5" stroke-width="3"/>
+              <line x1="50" y1="10" x2="50" y2="22" stroke="#F7E199" stroke-width="4" stroke-linecap="round" />
+              <circle cx="50" cy="9" r="5" fill="#D4AF37" />
+              <rect x="22" y="23" width="56" height="42" rx="16" fill="#0B0C10" stroke="#D4AF37" stroke-width="4" />
+              <circle cx="40" cy="44" r="4.5" fill="#F7E199" />
+              <circle cx="60" cy="44" r="4.5" fill="#F7E199" />
+              <path d="M44 55 Q50 58 56 55" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" />
+              <rect x="32" y="69" width="36" height="18" rx="9" fill="#0B0C10" stroke="#C8CDD5" stroke-width="3" />
             </svg>
           </div>
-          <div class="robot-bubble">BM এর সম্পর্কে আমাকে কিছু জিজ্ঞেস করুন</div>
+          <div class="robot-bubble">BM এর সম্পর্কে আমাকে কিছু জিজ্ঞেস করুন!</div>
         </div>
         <button class="action-btn-gold" onclick="toggleChat(true)">Ask AI Robot</button>
       </div>
@@ -679,7 +670,7 @@
       <div class="glass-card">
         <h2 class="section-heading">About BM Rafi Sardar</h2>
         <div class="bio-box" style="max-width: 100%; margin-bottom: 24px;">
-          Independent content creator and student from Tongi, Dhaka, Bangladesh. BM Rafi Sardar is a Bangladeshi student, dreamer, and digital creator passionate about technology, artificial intelligence, space, and building creative digital experiences.
+          Independent content creator and student from Tongi, Dhaka, Bangladesh. BM Rafi Sardar is a Bangladeshi student and creator building digital presence across social and web platforms.
         </div>
 
         <h3 class="section-heading">All Official &amp; Social Profiles</h3>
@@ -689,165 +680,25 @@
               <span class="link-title">Canonical Website</span>
               <span class="link-value">bmrafisardar.xxxy.info</span>
             </div>
-            <span>↗</span>
+            <span>&#8599;</span>
           </a>
+
           <a class="link-card" href="https://facebook.com/RxBD96" target="_blank" rel="noopener noreferrer">
             <div>
               <span class="link-title">Facebook</span>
               <span class="link-value">@RxBD96</span>
             </div>
-            <span>↗</span>
+            <span>&#8599;</span>
           </a>
+
           <a class="link-card" href="https://youtube.com/@bmrafisardar" target="_blank" rel="noopener noreferrer">
             <div>
               <span class="link-title">YouTube</span>
               <span class="link-value">@bmrafisardar</span>
             </div>
-            <span>↗</span>
+            <span>&#8599;</span>
           </a>
+
           <a class="link-card" href="https://github.com/bmrafisardar" target="_blank" rel="noopener noreferrer">
             <div>
-              <span class="link-title">GitHub</span>
-              <span class="link-value">github.com/bmrafisardar</span>
-            </div>
-            <span>↗</span>
-              <div id="liquidLens"></div>
-                  <script>
-      (function setupLens() {
-        const lens = document.getElementById("liquidLens");
-        if (!lens) return;
-
-        let targetX = window.innerWidth / 2;
-        let targetY = window.innerHeight / 2;
-        let currentX = -200;
-        let currentY = -200;
-
-        let targetScale = 0.25;
-        let currentScale = 0.25;
-        let targetOpacity = 0;
-        let currentOpacity = 0;
-
-        let isActive = false;
-        let wobblePhase = 0;
-        let hideTimer = null;
-
-        function getRandomEdgeSpawn(tx, ty) {
-          const w = window.innerWidth;
-          const h = window.innerHeight;
-          const side = Math.floor(Math.random() * 4);
-          if (side === 0) return { x: tx + (Math.random() - 0.5) * 240, y: -110 };      // উপর থেকে
-          if (side === 1) return { x: w + 110, y: ty + (Math.random() - 0.5) * 240 };   // ডান পাশ থেকে
-          if (side === 2) return { x: tx + (Math.random() - 0.5) * 240, y: h + 110 };   // নিচ থেকে
-          return { x: -110, y: ty + (Math.random() - 0.5) * 240 };                      // বাম পাশ থেকে
-        }
-
-        function triggerLens(x, y) {
-          clearTimeout(hideTimer);
-          if (!isActive || currentOpacity < 0.15) {
-            const edge = getRandomEdgeSpawn(x, y);
-            currentX = edge.x;
-            currentY = edge.y;
-            currentScale = 0.55;
-          }
-          isActive = true;
-          targetX = x;
-          targetY = y;
-          targetScale = 1.06;
-          targetOpacity = 1;
-        }
-
-        function moveLens(x, y) {
-          if (!isActive) {
-            triggerLens(x, y);
-            return;
-          }
-          clearTimeout(hideTimer);
-          targetX = x;
-          targetY = y;
-          targetScale = 1.08;
-          targetOpacity = 1;
-        }
-
-        function releaseLens() {
-          clearTimeout(hideTimer);
-          hideTimer = setTimeout(() => {
-            isActive = false;
-            targetScale = 0.25;
-            targetOpacity = 0;
-          }, 2500);
-        }
-
-        window.addEventListener("touchstart", (e) => {
-          if (!e.touches.length) return;
-          const t = e.touches[0];
-          triggerLens(t.clientX, t.clientY);
-        }, { passive: true });
-
-        window.addEventListener("touchmove", (e) => {
-          if (!e.touches.length) return;
-          const t = e.touches[0];
-          moveLens(t.clientX, t.clientY);
-        }, { passive: true });
-
-        window.addEventListener("touchend", () => {
-          releaseLens();
-        }, { passive: true });
-
-        window.addEventListener("touchcancel", () => {
-          releaseLens();
-        }, { passive: true });
-
-        window.addEventListener("pointerdown", (e) => {
-          if (e.pointerType === "touch") return;
-          triggerLens(e.clientX, e.clientY);
-        });
-
-        window.addEventListener("pointermove", (e) => {
-          if (e.pointerType === "touch") return;
-          if (e.buttons > 0 || isActive) {
-            moveLens(e.clientX, e.clientY);
-          }
-        });
-
-        window.addEventListener("pointerup", (e) => {
-          if (e.pointerType === "touch") return;
-          releaseLens();
-        });
-
-        function tick() {
-          wobblePhase += 0.085;
-
-          const dx = targetX - currentX;
-          const dy = targetY - currentY;
-
-          // স্লো ও স্মুথ লিকুইড ফ্লোটিং গতি
-          currentX += dx * 0.058;
-          currentY += dy * 0.058;
-
-          currentScale += (targetScale - currentScale) * 0.075;
-          currentOpacity += (targetOpacity - currentOpacity) * 0.09;
-
-          // দুলতে দুলতে আসার জেলি/লিকুইড ওয়েভ ইফেক্ট
-          const speed = Math.hypot(dx, dy);
-          const swingX = Math.sin(wobblePhase) * (isActive ? 5.5 : 0);
-          const swingY = Math.cos(wobblePhase * 0.85) * (isActive ? 5.5 : 0);
-
-          const jellyWave = Math.sin(wobblePhase * 1.4) * 0.075;
-          const stretch = Math.min(speed * 0.0022, 0.24);
-          const angle = Math.atan2(dy, dx) * (180 / Math.PI);
-
-          const scaleX = currentScale * (1 + stretch + jellyWave);
-          const scaleY = currentScale * (1 - stretch * 0.4 - jellyWave);
-
-          lens.style.opacity = currentOpacity.toFixed(3);
-          lens.style.transform = `translate3d(${(currentX + swingX).toFixed(2)}px, ${(currentY + swingY).toFixed(2)}px, 0) rotate(${angle.toFixed(1)}deg) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)})`;
-
-          requestAnimationFrame(tick);
-        }
-
-        
-      })();
-    </script>
-  </body>
-          </html>
-            
+              <span
